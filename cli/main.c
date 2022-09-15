@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <commands.h>
+
 struct command_manager_t command_manager;
 
 bool help_tr(slot_list_node_t* n) {
@@ -26,6 +28,10 @@ int main(int argc, char** argv) {
 	create_command_manager(&command_manager);
 
 	new_command(&command_manager, "help", "Shows help for a command!", help);
+
+	new_command(&command_manager, "new_db", "Create a new db in memory!", new_db);
+	new_command(&command_manager, "load_db", "Load a db from a file!", load_db);
+	new_command(&command_manager, "save_db", "Save a db to a file", save_db);
 
 	bool running = true;
 	while (running) {

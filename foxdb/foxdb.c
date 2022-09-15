@@ -135,3 +135,26 @@ foxdb_str_t* foxdb_str(const char* name, const char* value) {
 
 	return e;
 }
+
+
+void* foxdb_from_file(FILE* db) {
+	fseek(db, 0, SEEK_END);
+	int s = ftell(db);
+	fseek(db, 0, SEEK_SET);
+
+	void* buf = malloc(s);
+	fread(buf, 1, s, db);
+
+	foxdb_file_header_t* header = (foxdb_file_header_t*) buf;
+	assert(header->magic == FOXDB_MAGIC);
+
+	return buf;
+}
+
+void foxdb_to_file(void* foxdb, FILE* db) {
+	foxdb_file_header_t* header = (foxdb_file_header_t*) foxdb;
+
+	fseek(db, 0, SEEK_SET);
+	fwrite(foxdb, 1, header->size, db);
+	fflush(db);
+}

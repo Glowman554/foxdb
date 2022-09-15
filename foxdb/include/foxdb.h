@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #define FOXDB_MAGIC 0xf0DBBABE
 #define FOXDB_KEY_MAX 64
@@ -55,3 +56,6 @@ foxdb_entry_t* foxdb_copy_entry(foxdb_entry_t* entry);
 foxdb_int_t* foxdb_int(const char* name, int value);
 foxdb_bool_t* foxdb_bool(const char* name, bool value);
 foxdb_str_t* foxdb_str(const char* name, const char* value);
+
+void* foxdb_from_file(FILE* db);
+void foxdb_to_file(void* foxdb, FILE* db);
