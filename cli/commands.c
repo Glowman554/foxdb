@@ -44,3 +44,16 @@ bool save_db(int argc, char** argv) {
 	printf("Saved successfully to %s!\n", argv[1]);
 	return true;
 }
+
+void keys_it(foxdb_entry_t* e, uint64_t of) {
+	printf("%s: %d@%ldB\n", e->key, e->type, e->size);
+}
+
+bool keys(int argc, char** argv) {
+	no_args();
+
+	assert(db != NULL);
+
+	foxdb_iterate(db, keys_it);
+	return true;
+}
