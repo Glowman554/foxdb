@@ -2,6 +2,10 @@
 #include <assert.h>
 #include <foxdb.h>
 
+void list_it(foxdb_entry_t* e, uint64_t of) {
+	printf("%ld %s: %d@%ldB\n", of, e->key, e->type, e->size);
+}
+
 int main() {
 	void* db = foxdb_new();
 
@@ -17,6 +21,8 @@ int main() {
 	foxdb_del_entry((foxdb_entry_t*) b);
 	foxdb_del_entry((foxdb_entry_t*) s);
 
+	foxdb_iterate(db, list_it);
+
 	i = (foxdb_int_t*) foxdb_get(db, "test_int");
 	assert(i->header.type == FOXDB_INT);
 	printf("%d\n", i->val);
@@ -30,6 +36,14 @@ int main() {
 	foxdb_del_entry((foxdb_entry_t*) i);
 	foxdb_del_entry((foxdb_entry_t*) b);
 	foxdb_del_entry((foxdb_entry_t*) s);
+
+	db = foxdb_remove(db, "test_str");
+	foxdb_iterate(db, list_it);
+	assert(foxdb_get(db, "test_str") == NULL);
+
+	db = foxdb_remove(db, "test_int");
+	foxdb_iterate(db, list_it);
+	assert(foxdb_get(db, "test_int") == NULL);
 
 	foxdb_del(db);
 

@@ -33,12 +33,15 @@ enum foxdb_types {
 	FOXDB_STR,
 };
 
+typedef void (*foxdb_key_iterator)(foxdb_entry_t* e, uint64_t of);
+
 void* foxdb_new();
 void foxdb_del(void* foxdb);
 
 void* foxdb_insert(void* foxdb, foxdb_entry_t* entry);
 void* foxdb_remove(void* foxdb, const char* name);
 foxdb_entry_t* foxdb_get(void* foxdb, const char* name); // returns copy of struct. NEEDS TO BE FREED WITH A CALL TO foxdb_del_entry
+void foxdb_iterate(void* foxdb, foxdb_key_iterator it);
 
 void foxdb_del_entry(foxdb_entry_t* entry);
 foxdb_entry_t* foxdb_copy_entry(foxdb_entry_t* entry);
