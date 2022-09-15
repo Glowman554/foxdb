@@ -23,14 +23,13 @@ int main() {
 
 	foxdb_iterate(db, list_it);
 
-	i = (foxdb_int_t*) foxdb_get(db, "test_int");
-	assert(i->header.type == FOXDB_INT);
+	i = foxdb_get_int(db, "test_int");
 	printf("%d\n", i->val);
-	b = (foxdb_bool_t*) foxdb_get(db, "test_bool");
-	assert(b->header.type == FOXDB_BOOL);
+
+	b = foxdb_get_bool(db, "test_bool");
 	printf("%s\n", b->val ? "true" : "false");
-	s = (foxdb_str_t*) foxdb_get(db, "test_str");
-	assert(s->header.type == FOXDB_STR);
+
+	s = foxdb_get_str(db, "test_str");
 	printf("%s\n", s->val);
 
 	foxdb_del_entry((foxdb_entry_t*) i);

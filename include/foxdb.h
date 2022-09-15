@@ -43,6 +43,12 @@ void* foxdb_remove(void* foxdb, const char* name);
 foxdb_entry_t* foxdb_get(void* foxdb, const char* name); // returns copy of struct. NEEDS TO BE FREED WITH A CALL TO foxdb_del_entry
 void foxdb_iterate(void* foxdb, foxdb_key_iterator it);
 
+#define FOXDB_GET_TYPED_DEC(type, fname) type* fname(void* foxdb, const char* name)
+
+FOXDB_GET_TYPED_DEC(foxdb_int_t, foxdb_get_int);
+FOXDB_GET_TYPED_DEC(foxdb_bool_t, foxdb_get_bool);
+FOXDB_GET_TYPED_DEC(foxdb_str_t, foxdb_get_str);
+
 void foxdb_del_entry(foxdb_entry_t* entry);
 foxdb_entry_t* foxdb_copy_entry(foxdb_entry_t* entry);
 

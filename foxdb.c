@@ -86,6 +86,16 @@ void foxdb_iterate(void* foxdb, foxdb_key_iterator it)  {
 	}
 }
 
+#define FOXDB_GET_TYPED(type_n, fname, type_id) type_n* fname(void* foxdb, const char* name) { \
+	foxdb_entry_t* e = foxdb_get(foxdb, name); \
+	assert(e && e->type == type_id); \
+	return (type_n*) e; \
+}
+
+FOXDB_GET_TYPED(foxdb_int_t, foxdb_get_int, FOXDB_INT);
+FOXDB_GET_TYPED(foxdb_bool_t, foxdb_get_bool, FOXDB_BOOL);
+FOXDB_GET_TYPED(foxdb_str_t, foxdb_get_str, FOXDB_STR);
+
 void foxdb_del_entry(foxdb_entry_t* entry) {
 	free(entry);
 }
