@@ -1,6 +1,7 @@
 #include <foxdb.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 void* foxdb_new() {
 	foxdb_file_header_t* header = (foxdb_file_header_t*) malloc(sizeof(foxdb_file_header_t));
@@ -16,6 +17,8 @@ void foxdb_del(void* foxdb) {
 }
 
 void* foxdb_insert(void* foxdb, foxdb_entry_t* entry) {
+	assert(foxdb_get(foxdb, entry->key) == NULL);
+	
 	foxdb_file_header_t* header = (foxdb_file_header_t*) foxdb;
 
 	header = (foxdb_file_header_t*) realloc(header, header->size + entry->size);
