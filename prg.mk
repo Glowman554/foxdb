@@ -8,7 +8,7 @@ CSRC = $(call rwildcard,./,*.c)
 OBJS = $(patsubst %.c, $(OBJDIR)/%_$(OUTPUT).o, $(CSRC))
 
 
-CFLAGS = -Iinclude
+CFLAGS = -Iinclude -g
 LDFLAGS = 
 
 CFLAGS += $(USER_CFLAGS)

@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/foxdb/include/**"
+                "${workspaceFolder}/foxdb/include/**",
+                "${workspaceFolder}/cli/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
