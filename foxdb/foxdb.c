@@ -129,7 +129,7 @@ foxdb_str_t* foxdb_str(const char* name, const char* value) {
 	foxdb_str_t* e = (foxdb_str_t*) malloc(sizeof(foxdb_str_t) + val_len + 1);
 
 	strncpy(e->header.key, name, FOXDB_KEY_MAX);
-	e->header.size = sizeof(foxdb_bool_t) + val_len + 1;
+	e->header.size = sizeof(foxdb_str_t) + val_len + 1;
 	e->header.type = FOXDB_STR;
 	
 	memset(e->val, 0, val_len + 1);
@@ -153,8 +153,8 @@ foxdb_bin_t* foxdb_bin(const char* name, uint64_t cid, uint64_t size, uint8_t* v
 	foxdb_bin_t* e = (foxdb_bin_t*) malloc(sizeof(foxdb_bin_t) + size);
 
 	strncpy(e->header.key, name, FOXDB_KEY_MAX);
-	e->header.size = sizeof(foxdb_bool_t) + size;
-	e->header.type = FOXDB_STR;
+	e->header.size = sizeof(foxdb_bin_t) + size;
+	e->header.type = FOXDB_BIN;
 	
 	e->cid = cid;
 	e->size = size;

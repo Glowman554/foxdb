@@ -13,13 +13,18 @@ int main() {
 	foxdb_bool_t* b = foxdb_bool("test_bool", true);
 	foxdb_str_t* s = foxdb_str("test_str", "hewoo from a string!");
 
+	int test[] = { 1, 3, 5, 7, 9 };
+	foxdb_bin_t* bi = foxdb_bin("test_bin", 0xff00dd, sizeof(test), (uint8_t*) test);
+
 	db = foxdb_insert(db, (foxdb_entry_t*) i);
 	db = foxdb_insert(db, (foxdb_entry_t*) b);
 	db = foxdb_insert(db, (foxdb_entry_t*) s);
+	db = foxdb_insert(db, (foxdb_entry_t*) bi);
 	
 	foxdb_del_entry((foxdb_entry_t*) i);
 	foxdb_del_entry((foxdb_entry_t*) b);
 	foxdb_del_entry((foxdb_entry_t*) s);
+	foxdb_del_entry((foxdb_entry_t*) bi);
 
 	foxdb_iterate(db, list_it);
 
@@ -32,9 +37,16 @@ int main() {
 	s = foxdb_get_str(db, "test_str");
 	printf("%s\n", s->val);
 
+	bi = foxdb_get_bin(db, "test_bin");
+	int* test2 = (int*) bi->val;
+	for (int i = 0; i < bi->size / sizeof(int); i++) {
+		printf("bin: %d\n", test2[i]);
+	}
+
 	foxdb_del_entry((foxdb_entry_t*) i);
 	foxdb_del_entry((foxdb_entry_t*) b);
 	foxdb_del_entry((foxdb_entry_t*) s);
+	foxdb_del_entry((foxdb_entry_t*) bi);
 
 	FILE* f = fopen("test.fdb", "wb");
 	foxdb_to_file(db, f);
