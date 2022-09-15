@@ -36,6 +36,10 @@ int main() {
 	foxdb_del_entry((foxdb_entry_t*) b);
 	foxdb_del_entry((foxdb_entry_t*) s);
 
+	FILE* f = fopen("test.fdb", "wb");
+	foxdb_to_file(db, f);
+	fclose(f);
+
 	db = foxdb_remove(db, "test_str");
 	foxdb_iterate(db, list_it);
 	assert(foxdb_get(db, "test_str") == NULL);
