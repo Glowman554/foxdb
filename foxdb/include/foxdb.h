@@ -27,11 +27,16 @@ typedef struct foxdb_entry {
 DATA_STRUCT(foxdb_int_t, int val);
 DATA_STRUCT(foxdb_bool_t, bool val);
 DATA_STRUCT(foxdb_str_t, char val[]);
+DATA_STRUCT(foxdb_float_t, float val);
+DATA_STRUCT(foxdb_bin_t, uint64_t cid; uint64_t size; uint8_t val[]);
 
 enum foxdb_types {
 	FOXDB_INT = 1,
 	FOXDB_BOOL,
 	FOXDB_STR,
+
+	FOXDB_FLOAD,
+	FOXDB_BIN
 };
 
 typedef void (*foxdb_key_iterator)(foxdb_entry_t* e, uint64_t of);
@@ -49,6 +54,8 @@ void foxdb_iterate(void* foxdb, foxdb_key_iterator it);
 FOXDB_GET_TYPED_DEC(foxdb_int_t, foxdb_get_int);
 FOXDB_GET_TYPED_DEC(foxdb_bool_t, foxdb_get_bool);
 FOXDB_GET_TYPED_DEC(foxdb_str_t, foxdb_get_str);
+FOXDB_GET_TYPED_DEC(foxdb_float_t, foxdb_get_float);
+FOXDB_GET_TYPED_DEC(foxdb_bin_t, foxdb_get_bin);
 
 void foxdb_del_entry(foxdb_entry_t* entry);
 foxdb_entry_t* foxdb_copy_entry(foxdb_entry_t* entry);
@@ -56,6 +63,8 @@ foxdb_entry_t* foxdb_copy_entry(foxdb_entry_t* entry);
 foxdb_int_t* foxdb_int(const char* name, int value);
 foxdb_bool_t* foxdb_bool(const char* name, bool value);
 foxdb_str_t* foxdb_str(const char* name, const char* value);
+foxdb_float_t* foxdb_float(const char* name, float value);
+foxdb_bin_t* foxdb_bin(const char* name, uint64_t cid, uint64_t size, uint8_t* val);
 
 void* foxdb_from_file(FILE* db);
 void foxdb_to_file(void* foxdb, FILE* db);
