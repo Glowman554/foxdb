@@ -95,6 +95,8 @@ void foxdb_iterate(void* foxdb, foxdb_key_iterator it)  {
 FOXDB_GET_TYPED(foxdb_int_t, foxdb_get_int, FOXDB_INT);
 FOXDB_GET_TYPED(foxdb_bool_t, foxdb_get_bool, FOXDB_BOOL);
 FOXDB_GET_TYPED(foxdb_str_t, foxdb_get_str, FOXDB_STR);
+FOXDB_GET_TYPED(foxdb_float_t, foxdb_get_float, FOXDB_FLOAT);
+FOXDB_GET_TYPED(foxdb_bin_t, foxdb_get_bin, FOXDB_BIN);
 
 void foxdb_del_entry(foxdb_entry_t* entry) {
 	free(entry);
@@ -136,6 +138,31 @@ foxdb_str_t* foxdb_str(const char* name, const char* value) {
 	return e;
 }
 
+foxdb_float_t* foxdb_float(const char* name, float value) {
+	foxdb_float_t* e = (foxdb_float_t*) malloc(sizeof(foxdb_float_t));
+
+	strncpy(e->header.key, name, FOXDB_KEY_MAX);
+	e->header.size = sizeof(foxdb_float_t);
+	e->header.type = FOXDB_FLOAT;
+	e->val = value;
+
+	return e;
+}
+
+foxdb_bin_t* foxdb_bin(const char* name, uint64_t cid, uint64_t size, uint8_t* value) {
+	foxdb_bin_t* e = (foxdb_bin_t*) malloc(sizeof(foxdb_bin_t) + size);
+
+	strncpy(e->header.key, name, FOXDB_KEY_MAX);
+	e->header.size = sizeof(foxdb_bool_t) + size;
+	e->header.type = FOXDB_STR;
+	
+	e->cid = cid;
+	e->size = size;
+
+	memcpy(e->val, value, size);
+
+	return e;
+}
 
 void* foxdb_from_file(FILE* db) {
 	fseek(db, 0, SEEK_END);

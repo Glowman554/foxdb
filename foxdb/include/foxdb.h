@@ -35,7 +35,7 @@ enum foxdb_types {
 	FOXDB_BOOL,
 	FOXDB_STR,
 
-	FOXDB_FLOAD,
+	FOXDB_FLOAT,
 	FOXDB_BIN
 };
 
@@ -64,7 +64,7 @@ foxdb_int_t* foxdb_int(const char* name, int value);
 foxdb_bool_t* foxdb_bool(const char* name, bool value);
 foxdb_str_t* foxdb_str(const char* name, const char* value);
 foxdb_float_t* foxdb_float(const char* name, float value);
-foxdb_bin_t* foxdb_bin(const char* name, uint64_t cid, uint64_t size, uint8_t* val);
+foxdb_bin_t* foxdb_bin(const char* name, uint64_t cid, uint64_t size, uint8_t* value);
 
 void* foxdb_from_file(FILE* db);
 void foxdb_to_file(void* foxdb, FILE* db);
