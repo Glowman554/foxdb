@@ -79,4 +79,16 @@ foxdb_bool_t* foxdb_bool(const char* name, bool value) {
 	return e;
 }
 
-foxdb_str_t* foxdb_str(const char* name, const char* value);
+foxdb_str_t* foxdb_str(const char* name, const char* value) {
+	int val_len = strlen(value);
+	foxdb_str_t* e = (foxdb_str_t*) malloc(sizeof(foxdb_str_t) + val_len + 1);
+
+	strncpy(e->header.key, name, FOXDB_KEY_MAX);
+	e->header.size = sizeof(foxdb_bool_t) + val_len + 1;
+	e->header.type = FOXDB_STR;
+	
+	memset(e->val, 0, val_len + 1);
+	memcpy(e->val, value, val_len);
+
+	return e;
+}
