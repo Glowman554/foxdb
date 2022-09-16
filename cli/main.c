@@ -34,7 +34,9 @@ int main(int argc, char** argv) {
 	new_command(&command_manager, "save_db", "Save a db to a file", save_db);
 
 	new_command(&command_manager, "keys", "List all keys in a db!", keys);
-	new_command(&command_manager, "get", "Get the value from a key!\n", get);
+	new_command(&command_manager, "get", "Get the value from a key!", get);
+
+	new_command(&command_manager, "new_str", "Insert a new string in the database!", new_str);
 
 	bool running = true;
 	while (running) {

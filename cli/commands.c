@@ -1,11 +1,13 @@
 #include <commands.h>
 #include <stdio.h>
 #include <foxdb.h>
+#include <string.h>
 #include <stddef.h>
 #include <assert.h>
 
 #define no_args() if (argc != 1) { printf("Command takes no arguments!\n"); return false; }
 #define x_args(x) if (argc != x + 1) { printf("Command takes %d arguments!\n", x); return false; }
+#define x_or_more_args(x) if (argc < x + 1) { printf("Command takes %d+ arguments!\n", x); return false; }
 
 void* db = NULL;
 
@@ -103,6 +105,28 @@ bool get(int argc, char** argv) {
 	} else {
 		printf("Key %s not found!\n", argv[1]);
 	}
+
+	return true;
+}
+
+bool new_str(int argc, char** argv) {
+	x_or_more_args(2);
+
+	assert(db != NULL);
+
+	char str[512] = { 0 };
+	for (int i = 2; i < argc; i++) {
+		strcat(str, argv[i]);
+		strcat(str, " ");
+	}
+
+	foxdb_str_t* e = foxdb_str(argv[1], str);
+
+	db = foxdb_insert(db, (foxdb_entry_t*) e);
+
+	foxdb_del_entry((foxdb_entry_t*) e);
+
+	printf("Successfully added %s!\n", argv[1]);
 
 	return true;
 }
