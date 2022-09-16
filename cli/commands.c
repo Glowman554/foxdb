@@ -83,10 +83,23 @@ bool get(int argc, char** argv) {
 				printf("%s\n", ((foxdb_str_t*) e)->val);
 				break;
 				
+			case FOXDB_BIN:
+				{
+					foxdb_bin_t* bin = (foxdb_bin_t*) e;
+					printf("%ld@%ldB\n", bin->cid, bin->size);
+					for (int i = 0; i < bin->size; i++) {
+						printf("%2x ", bin->val[i]);
+					}
+					printf("\n");
+				}
+				break;
+
 			default:
 				printf("Key %s has unknown type %d!\n", argv[1], e->type);
 				break;
 		}
+
+		foxdb_del_entry(e);
 	} else {
 		printf("Key %s not found!\n", argv[1]);
 	}
