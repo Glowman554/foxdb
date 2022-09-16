@@ -165,3 +165,21 @@ bool new_bool(int argc, char** argv) {
 
 	return true;
 }
+
+bool exit_(int argc, char** argv) {
+	no_args();
+
+	if (db != NULL) {
+		char* save_to = ".maybe_you_forgot_to_save.fdb";
+
+		FILE* f = fopen(save_to, "wb");
+		foxdb_to_file(db, f);
+		fclose(f);
+
+		printf("Saved successfully to %s!\n", save_to);
+	}
+	
+	exit(0);
+
+	return true;
+}

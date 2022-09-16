@@ -59,6 +59,8 @@ int main(int argc, char** argv) {
 	new_command(&command_manager, "new_int", "Insert a new int into the database!", new_int);
 	new_command(&command_manager, "new_bool", "Insert a new bool into the database!", new_bool);
 
+	new_command(&command_manager, "exit", "Self explanatory!", exit_);
+
 	bool running = true;
 	while (running) {
 		char buf[128] = { 0 };
