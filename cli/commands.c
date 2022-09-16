@@ -110,6 +110,19 @@ bool get(int argc, char** argv) {
 	return true;
 }
 
+bool remove_(int argc, char** argv) {
+	x_args(1);
+
+	assert(db != NULL);
+
+	db = foxdb_remove(db, argv[1]);
+
+	printf("Successfully removed %s!\n", argv[1]);
+
+	return true;
+}
+
+
 bool new_str(int argc, char** argv) {
 	x_or_more_args(2);
 
