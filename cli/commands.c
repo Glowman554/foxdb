@@ -57,3 +57,39 @@ bool keys(int argc, char** argv) {
 	foxdb_iterate(db, keys_it);
 	return true;
 }
+
+
+bool get(int argc, char** argv) {
+	x_args(1);
+
+	assert(db != NULL);
+
+	foxdb_entry_t* e = foxdb_get(db, argv[1]);
+	if (e) {
+		switch(e->type) {
+			case FOXDB_INT:
+				printf("%d\n", ((foxdb_int_t*) e)->val);
+				break;
+
+			case FOXDB_BOOL:
+				printf("%s\n", ((foxdb_bool_t*) e)->val ? "true" : "false");
+				break;
+			
+			case FOXDB_FLOAT:
+				printf("%f\n", ((foxdb_float_t*) e)->val);
+				break;
+
+			case FOXDB_STR:
+				printf("%s\n", ((foxdb_str_t*) e)->val);
+				break;
+				
+			default:
+				printf("Key %s has unknown type %d!\n", argv[1], e->type);
+				break;
+		}
+	} else {
+		printf("Key %s not found!\n", argv[1]);
+	}
+
+	return true;
+}
