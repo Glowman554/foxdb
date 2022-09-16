@@ -3,6 +3,7 @@
 #include <foxdb.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <assert.h>
 
 #define no_args() if (argc != 1) { printf("Command takes no arguments!\n"); return false; }
@@ -121,6 +122,40 @@ bool new_str(int argc, char** argv) {
 	}
 
 	foxdb_str_t* e = foxdb_str(argv[1], str);
+
+	db = foxdb_insert(db, (foxdb_entry_t*) e);
+
+	foxdb_del_entry((foxdb_entry_t*) e);
+
+	printf("Successfully added %s!\n", argv[1]);
+
+	return true;
+}
+
+bool new_int(int argc, char** argv) {
+	x_args(2);
+
+	assert(db != NULL);
+
+	int i = (int) strtol(argv[2], NULL, 10);
+	foxdb_int_t* e = foxdb_int(argv[1], i);
+
+	db = foxdb_insert(db, (foxdb_entry_t*) e);
+
+	foxdb_del_entry((foxdb_entry_t*) e);
+
+	printf("Successfully added %s!\n", argv[1]);
+
+	return true;
+}
+
+bool new_bool(int argc, char** argv) {
+		x_args(2);
+
+	assert(db != NULL);
+
+	bool b = strcmp(argv[2], "true") == 0;
+	foxdb_bool_t* e = foxdb_bool(argv[1], b);
 
 	db = foxdb_insert(db, (foxdb_entry_t*) e);
 

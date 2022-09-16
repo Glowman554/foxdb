@@ -55,7 +55,9 @@ int main(int argc, char** argv) {
 	new_command(&command_manager, "keys", "List all keys in a db!", keys);
 	new_command(&command_manager, "get", "Get the value from a key!", get);
 
-	new_command(&command_manager, "new_str", "Insert a new string in the database!", new_str);
+	new_command(&command_manager, "new_str", "Insert a new string into the database!", new_str);
+	new_command(&command_manager, "new_int", "Insert a new int into the database!", new_int);
+	new_command(&command_manager, "new_bool", "Insert a new bool into the database!", new_bool);
 
 	bool running = true;
 	while (running) {
