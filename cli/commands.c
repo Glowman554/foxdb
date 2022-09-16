@@ -150,7 +150,7 @@ bool new_int(int argc, char** argv) {
 }
 
 bool new_bool(int argc, char** argv) {
-		x_args(2);
+	x_args(2);
 
 	assert(db != NULL);
 
