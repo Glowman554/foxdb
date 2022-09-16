@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <foxdb.h>
 #include <commands.h>
 
 struct command_manager_t command_manager;
@@ -25,6 +25,25 @@ bool help(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
+	switch (argc) {
+		case 1:
+			break;
+
+		case 2:
+			{
+				FILE* f = fopen(argv[1], "rb");
+				db = foxdb_from_file(f);
+				fclose(f);
+
+				printf("Loaded db from %s!\n", argv[1]);
+			}
+			break;
+
+		default:
+			printf("Usage: %s <db?>\n", argv[0]);
+			return -1;
+	}
+
 	create_command_manager(&command_manager);
 
 	new_command(&command_manager, "help", "Shows help for a command!", help);
