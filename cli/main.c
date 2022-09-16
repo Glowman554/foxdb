@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
 
 	create_command_manager(&command_manager);
 
-	new_command(&command_manager, "help", "Shows help for a command!", help);
+	new_command(&command_manager, "help", "Shows help for the commands!", help);
 
 	new_command(&command_manager, "new_db", "Create a new db in memory!", new_db);
 	new_command(&command_manager, "load_db", "Load a db from a file!", load_db);
